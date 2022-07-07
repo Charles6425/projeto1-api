@@ -1,11 +1,19 @@
 package com.api.projeto1.model;
 
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
+@Entity
+public class Nome implements Serializable {
+    private static final long serialVersionUID=1L;
 
-public class Nome {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nome;
+    @ManyToOne
+    @JoinColumn(name = "lista_id")
     private Lista lista;
 
     public Nome(int id, String nome, Lista lista) {

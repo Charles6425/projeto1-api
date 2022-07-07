@@ -1,12 +1,18 @@
 package com.api.projeto1.model;
 
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Lista {
+public class Lista implements Serializable {
+    private static final long serialVersionUID=1L;
+    @Id
     private int id;
     private String descricao;
+    @OneToMany(mappedBy = "lista")
     private List<Nome> nomes = new ArrayList<>();
 
     public Lista(int id, String descricao) {
