@@ -1,21 +1,23 @@
 package com.api.projeto1.model;
 
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Lista implements Serializable {
     private static final long serialVersionUID=1L;
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String descricao;
     @OneToMany(mappedBy = "lista")
     private List<Nome> nomes = new ArrayList<>();
 
-    public Lista(int id, String descricao) {
+    public Lista(Integer id, String descricao) {
+        super();
         this.id = id;
         this.descricao = descricao;
     }
@@ -23,11 +25,11 @@ public class Lista implements Serializable {
         super();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
