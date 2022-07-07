@@ -1,6 +1,8 @@
 package com.api.projeto1.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,18 +14,19 @@ public class Nome implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "lista_id")
     private Lista lista;
 
+    public Nome(){
+        super();
+    }
     public Nome(Integer id, String nome, Lista lista) {
+        super();
         this.id = id;
         this.nome = nome;
         this.lista = lista;
-    }
-
-    public Nome(){
-        super();
     }
 
     public Integer getId() {
@@ -54,12 +57,14 @@ public class Nome implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Nome)) return false;
+
         Nome nome = (Nome) o;
-        return id == nome.id;
+
+        return id != null ? id.equals(nome.id) : nome.id == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return id != null ? id.hashCode() : 0;
     }
 }

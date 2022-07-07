@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @Entity
 public class Lista implements Serializable {
-    private static final long serialVersionUID=1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -16,13 +15,14 @@ public class Lista implements Serializable {
     @OneToMany(mappedBy = "lista")
     private List<Nome> nomes = new ArrayList<>();
 
+
+    public Lista(){
+        super();
+    }
     public Lista(Integer id, String descricao) {
         super();
         this.id = id;
         this.descricao = descricao;
-    }
-    public Lista(){
-        super();
     }
 
     public Integer getId() {
@@ -53,12 +53,14 @@ public class Lista implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Lista)) return false;
+
         Lista lista = (Lista) o;
-        return id == lista.id;
+
+        return id.equals(lista.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return id.hashCode();
     }
 }
