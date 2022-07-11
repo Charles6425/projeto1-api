@@ -45,4 +45,10 @@ public class ListaController {
         return ResponseEntity.ok().body(new ListaDTO(newLista));
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void>delete(@PathVariable Integer id){
+        listaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -2,10 +2,11 @@ package com.api.projeto1.service;
 
 
 import com.api.projeto1.dto.ListaDTO;
-import com.api.projeto1.exception.ObjectNotFoundException;
+import com.api.projeto1.service.exception.ObjectNotFoundException;
 import com.api.projeto1.model.Lista;
 import com.api.projeto1.repository.ListaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ListaService {
         return listaRepository.findAll();
     }
 
-    public Lista create (Lista lista){
+    public Lista create(Lista lista) {
         lista.setId(null);
         return listaRepository.save(lista);
     }
@@ -35,5 +36,16 @@ public class ListaService {
         Lista lista = findById(id);
         lista.setDescricao(listaDTO.getDescricao());
         return listaRepository.save(lista);
+    }
+
+    public void delete(Integer id) {
+        findById(id);
+        try {
+            listaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new com.api.projeto1.service.exception.DataIntegrityViolationException("" +
+                    "Objeto não pode ser deletado! Possui nomes vinculados");
+        }
+
     }
 }
