@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+
 @Entity
 public class Nome implements Serializable {
     private static final long serialVersionUID=1L;

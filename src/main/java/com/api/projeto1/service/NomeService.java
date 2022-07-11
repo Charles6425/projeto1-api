@@ -1,9 +1,11 @@
 package com.api.projeto1.service;
 
+
 import com.api.projeto1.model.Nome;
+import com.api.projeto1.repository.ListaRepository;
 import com.api.projeto1.repository.NomeRepository;
+import com.api.projeto1.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +16,24 @@ public class NomeService {
     @Autowired
     private NomeRepository nomeRepository;
 
-    public Nome findById(Integer id){
-      Optional<Nome> nome = nomeRepository.findById(id);
-        return nome.orElse(null);
+    @Autowired
+    private ListaService listaService;
+
+    public Nome findById(Integer id) {
+        Optional<Nome> nome = nomeRepository.findById(id);
+        return nome.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: "
+                + id + " Tipo: " + Nome.class.getName()));
     }
 
-    public List<Nome> findAll(){
+    public List<Nome> findAll() {
         List<Nome> nome = nomeRepository.findAll();
         return nome;
+    }
+
+    public List<Nome> findAllByLista(Integer id_lista){
+        listaService.findById(id_lista);
+        return nomeRepository.findAllByLista(id_lista);
+
     }
 
 
