@@ -1,6 +1,7 @@
 package com.api.projeto1.service;
 
 
+import com.api.projeto1.dto.ListaDTO;
 import com.api.projeto1.exception.ObjectNotFoundException;
 import com.api.projeto1.model.Lista;
 import com.api.projeto1.repository.ListaRepository;
@@ -23,5 +24,16 @@ public class ListaService {
 
     public List<Lista> findAll() {
         return listaRepository.findAll();
+    }
+
+    public Lista create (Lista lista){
+        lista.setId(null);
+        return listaRepository.save(lista);
+    }
+
+    public Lista update(Integer id, ListaDTO listaDTO) {
+        Lista lista = findById(id);
+        lista.setDescricao(listaDTO.getDescricao());
+        return listaRepository.save(lista);
     }
 }

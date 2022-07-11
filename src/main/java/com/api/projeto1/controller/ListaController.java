@@ -5,11 +5,10 @@ import com.api.projeto1.model.Lista;
 import com.api.projeto1.service.ListaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,4 +30,19 @@ public class ListaController {
         List<ListaDTO> listaDTO = lista.stream().map(obj-> new ListaDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listaDTO);
     }
+
+    @PostMapping
+    public ResponseEntity<Lista> create (@RequestBody Lista lista ){
+        lista = listaService.create(lista);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(lista.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ListaDTO> update (@PathVariable Integer id,
+                                            @RequestBody ListaDTO listaDTO){
+        Lista  newLista = listaService.update(id, listaDTO);
+        return ResponseEntity.ok().body(new ListaDTO(newLista));
+    }
+
 }
