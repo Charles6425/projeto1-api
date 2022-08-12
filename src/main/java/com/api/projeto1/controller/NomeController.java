@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//j
 @RestController
 @RequestMapping(value = "/nome")
 public class NomeController {
@@ -22,13 +23,7 @@ public class NomeController {
         Nome nome = nomeService.findById(id);
         return ResponseEntity.ok().body(nome);
     }
-
-//    @GetMapping
-//    public ResponseEntity<List<Nome>> fundAll(){
-//        List<Nome> nome = nomeService.findAll();
-//        return ResponseEntity.ok(nome);
-//    }
-
+    
     @GetMapping
     public ResponseEntity<List<NomeDTO>> fundAllByLista(@RequestParam(value = "lista", defaultValue = "0")
                                                          Integer id_lista){
