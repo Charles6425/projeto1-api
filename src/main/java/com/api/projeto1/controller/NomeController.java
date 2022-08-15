@@ -25,7 +25,7 @@ public class NomeController {
         return ResponseEntity.ok().body(nome);
     }
 
-    @GetMapping(value = "/todos")
+    @GetMapping(value = "/all")
     public ResponseEntity<List<Nome>> todos(){
         List<Nome> nome =nomeService.findAll();
         return ResponseEntity.ok().body(nome);
@@ -36,7 +36,6 @@ public class NomeController {
                                                          Integer id_lista){
         List<Nome> nome = nomeService.findAllByLista(id_lista);
         List<NomeDTO> nomeDTO = nome.stream().map(obj-> new NomeDTO(obj)).collect(Collectors.toList());
-
         return ResponseEntity.ok().body(nomeDTO);
     }
 
@@ -49,4 +48,20 @@ public class NomeController {
                 .buildAndExpand(newNome.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id_nome}")
+    public ResponseEntity<Nome> update(@RequestBody Nome nome,
+                                       @PathVariable Integer id_nome,
+                                       @RequestParam(value = "lista", defaultValue = "0")
+                                           Integer id_lista){
+        Nome newNome = nomeService.update(nome, id_nome, id_lista);
+        return ResponseEntity.ok().body(newNome);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void>delete(@PathVariable Integer id){
+        nomeService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

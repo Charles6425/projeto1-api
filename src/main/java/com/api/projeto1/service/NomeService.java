@@ -46,4 +46,17 @@ public class NomeService {
     }
 
 
+    public void delete(Integer id) {
+        Nome nome = findById(id);
+        nomeRepository.delete(nome);
+    }
+
+    public Nome update(Nome nome, Integer id_nome, Integer id_lista) {
+      Nome newNome = findById(id_nome);
+      Lista newLista = listaService.findById(id_lista);
+      newNome.setNome(nome.getNome());
+      newNome.setId(nome.getId());
+      newNome.setLista(newLista);
+        return nomeRepository.save(newNome);
+    }
 }
