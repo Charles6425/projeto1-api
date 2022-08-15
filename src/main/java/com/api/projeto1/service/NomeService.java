@@ -1,6 +1,7 @@
 package com.api.projeto1.service;
 
 
+import com.api.projeto1.model.Lista;
 import com.api.projeto1.model.Nome;
 import com.api.projeto1.repository.ListaRepository;
 import com.api.projeto1.repository.NomeRepository;
@@ -18,6 +19,7 @@ public class NomeService {
 
     @Autowired
     private ListaService listaService;
+    private Lista lista;
 
     public Nome findById(Integer id) {
         Optional<Nome> nome = nomeRepository.findById(id);
@@ -30,10 +32,17 @@ public class NomeService {
         return nome;
     }
 
-    public List<Nome> findAllByLista(Integer id_lista){
+    public List<Nome> findAllByLista(Integer id_lista) {
         listaService.findById(id_lista);
         return nomeRepository.findAllByLista(id_lista);
 
+    }
+
+    public Nome create(Nome nome, Integer lista_id) {
+        nome.setId(null);
+        Lista lista = listaService.findById(lista_id);
+        nome.setLista(lista);
+        return nomeRepository.save(nome);
     }
 
 
