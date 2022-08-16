@@ -52,11 +52,16 @@ public class NomeService {
     }
 
     public Nome update(Nome nome, Integer id_nome, Integer id_lista) {
-      Nome newNome = findById(id_nome);
-      Lista newLista = listaService.findById(id_lista);
-      newNome.setNome(nome.getNome());
-      newNome.setId(nome.getId());
-      newNome.setLista(newLista);
+        Nome newNome = findById(id_nome);
+        if(id_lista!=0 ){
+            Lista newLista = listaService.findById(id_lista);
+            newNome.setLista(newLista);
+        } else{
+            Lista newLista = listaService.findById(newNome.getLista().getId());
+            newNome.setLista(newLista);
+        }
+        newNome.setNome(nome.getNome());
+        newNome.setId(nome.getId());
         return nomeRepository.save(newNome);
     }
 }

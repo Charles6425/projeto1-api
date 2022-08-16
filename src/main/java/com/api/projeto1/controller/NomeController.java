@@ -52,7 +52,7 @@ public class NomeController {
     @PutMapping(value = "/{id_nome}")
     public ResponseEntity<Nome> update(@RequestBody Nome nome,
                                        @PathVariable Integer id_nome,
-                                       @RequestParam(value = "lista", defaultValue = "0")
+                                       @RequestParam(value = "lista", defaultValue = "0", required = false)
                                            Integer id_lista){
         Nome newNome = nomeService.update(nome, id_nome, id_lista);
         return ResponseEntity.ok().body(newNome);
