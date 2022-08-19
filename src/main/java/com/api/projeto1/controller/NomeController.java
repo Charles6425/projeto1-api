@@ -28,6 +28,7 @@ public class NomeController {
     @GetMapping(value = "/all")
     public ResponseEntity<List<Nome>> todos(){
         List<Nome> nome =nomeService.findAll();
+        System.out.println("teste do charles rrrr");
         return ResponseEntity.ok().body(nome);
     }
 
